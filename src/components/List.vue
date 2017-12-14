@@ -9,10 +9,9 @@
           <p>{{book.bookInfo}}</p>
           <div>
             <a href="#" @click="remove(book.id)">删除</a>
-            <a href="#">加入收藏</a>
+            <a href="#" @click="addCollect(book.id)">加入收藏</a>
           </div>
         </div>
-
       </li>
     </ul>
   </div>
@@ -31,8 +30,6 @@
     activated() {
       this.getBooks()
     },
-
-
     methods: {
       getBooks() {
         axios.get('/api/book').then((res) => {
@@ -49,7 +46,6 @@
 
     computed: {},
     components: {MHeader},
-
   }
 </script>
 <style scoped lang="less">

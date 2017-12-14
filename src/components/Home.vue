@@ -1,23 +1,25 @@
 <template>
   <div>
     <MHeader>首页</MHeader>
-
     <div class="content">
       <Swiper :swiperSlides="sliders"></Swiper>
       <!--热销图书-->
       <h4>热销图书</h4>
-      <ul class="hot">
+
+      <ul class="hot" v-if="books.length">
         <li v-for="book in books">
           <img :src="book.bookCover" alt="">
           <span>{{book.bookName}}</span>
           <span>{{book.bookInfo}}</span>
         </li>
       </ul>
+      <Loading v-else></Loading>
     </div>
   </div>
 </template>
 <script>
   import MHeader from '../base/MHeader.vue'
+  import Loading from '../base/Loading.vue'//导入
   import Swiper from '../base/Swiper.vue'
   import axios from 'axios'
 
@@ -44,13 +46,15 @@
       },
       getBooks() {
         axios.get("/api/hot").then((res => {
-          this.books = res.data;
+          setTimeout(()=> this.books = res.data,2000)
+          //  这里我们设置一个定时器来模拟数据没有立刻请求到，从而显示我们的动画效果。
         }))
-      }
+      },
+
     },
 
     computed: {},
-    components: {MHeader, Swiper}
+    components: {MHeader, Swiper,Loading}//注册
   }
 </script>
 <style scoped lang="less">
